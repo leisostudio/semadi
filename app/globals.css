@@ -1,0 +1,357 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts (loaded via next/font in layout.tsx, vars exposed here) ─── */
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
+
+:root {
+  /* ── Brand ────────────────────────────────── */
+  --color-primary:        #007BFF;
+  --color-primary-dark:   #1d4ed8;
+  --color-primary-light:  #60a5fa;
+  --color-primary-bg:     #eff6ff;
+
+  /* ── Accent ───────────────────────────────── */
+  --color-accent:         #DC3545;
+  --color-accent-dark:    #9f1239;
+  --color-accent-light:   #fb7185;
+  --color-accent-bg:      #fff1f2;
+
+  /* ── Neutrals ─────────────────────────────── */
+  --color-surface:        #ffffff;
+  --color-surface-raised: #f8fafc;
+  --color-surface-sunken: #f1f5f9;
+  --color-border:         #e2e8f0;
+  --color-border-strong:  #cbd5e1;
+
+  /* ── Text ─────────────────────────────────── */
+  --color-text-primary:   #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary:  #94a3b8;
+  --color-text-inverse:   #ffffff;
+
+  /* ── Misc ─────────────────────────────────── */
+  --radius-default:       0.5rem;
+  --radius-card:          0.75rem;
+  --shadow-card:          0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+
+  /* ── Layout ───────────────────────────────── */
+  --navbar-height:        4.5rem;   /* 72px */
+  --section-padding-y:    5rem;     /* 80px */
+  --container-max:        80rem;    /* 1280px */
+  --container-px:         1.5rem;   /* 24px */
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Dark mode overrides – enables future dark theme support */
+  :root {
+    --color-surface:        #0f172a;
+    --color-surface-raised: #1e293b;
+    --color-surface-sunken: #0b1120;
+    --color-border:         #1e293b;
+    --color-border-strong:  #334155;
+    --color-text-primary:   #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-text-tertiary:  #475569;
+  }
+}
+
+/* ─── Base Reset & Defaults ──────────────────────────────────────────────────── */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    tab-size: 4;
+  }
+
+  body {
+    @apply bg-white text-slate-900 font-sans;
+    min-height: 100svh;
+    overflow-x: hidden;
+  }
+
+  /* Heading defaults */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight text-slate-900;
+  }
+
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+  h5 { @apply text-lg md:text-xl; }
+  h6 { @apply text-base md:text-lg; }
+
+  /* Paragraph */
+  p {
+    @apply text-slate-600 leading-relaxed;
+  }
+
+  /* Links */
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-blue-500 rounded-sm;
+  }
+
+  /* Images */
+  img, video {
+    @apply max-w-full h-auto;
+  }
+
+  /* Horizontal rule */
+  hr {
+    @apply border-slate-200;
+  }
+}
+
+/* ─── Component Layer ────────────────────────────────────────────────────────── */
+
+@layer components {
+
+  /* ── Container ──────────────────────────────────────────────────────────── */
+  .container-site {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+  }
+
+  /* ── Buttons ────────────────────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-lg px-5 py-2.5
+           text-sm font-semibold
+           transition-all duration-200
+           focus-visible:outline-2 focus-visible:outline-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed
+           select-none;
+  }
+
+  .btn-primary {
+    @apply btn
+           bg-blue-600 text-white
+           hover:bg-blue-700 active:bg-blue-800
+           shadow-brand hover:shadow-brand-lg
+           focus-visible:outline-blue-600;
+  }
+
+  .btn-accent {
+    @apply btn
+           bg-red-600 text-white
+           hover:bg-red-700 active:bg-red-800
+           shadow-accent
+           focus-visible:outline-red-600;
+  }
+
+  .btn-outline {
+    @apply btn
+           border-2 border-blue-600 text-blue-600
+           hover:bg-blue-50 active:bg-blue-100
+           focus-visible:outline-blue-600;
+  }
+
+  .btn-ghost {
+    @apply btn
+           text-slate-700
+           hover:bg-slate-100 active:bg-slate-200
+           focus-visible:outline-slate-400;
+  }
+
+  .btn-lg {
+    @apply px-7 py-3.5 text-base rounded-xl;
+  }
+
+  .btn-sm {
+    @apply px-3.5 py-1.5 text-xs rounded-md;
+  }
+
+  /* ── Cards ──────────────────────────────────────────────────────────────── */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-100
+           shadow-card
+           transition-shadow duration-300
+           hover:shadow-card-hover;
+  }
+
+  /* ── Section ────────────────────────────────────────────────────────────── */
+  .section {
+    @apply py-20 lg:py-28;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-display font-bold text-slate-900 tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply mt-4 text-lg text-slate-500 leading-relaxed max-w-2xl;
+  }
+
+  /* ── Badge ──────────────────────────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1.5
+           rounded-full px-3 py-1
+           text-xs font-semibold tracking-wide uppercase;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-50 text-blue-700;
+  }
+
+  .badge-red {
+    @apply badge bg-red-50 text-red-700;
+  }
+
+  .badge-green {
+    @apply badge bg-emerald-50 text-emerald-700;
+  }
+
+  .badge-slate {
+    @apply badge bg-slate-100 text-slate-600;
+  }
+
+  /* ── Form Elements ──────────────────────────────────────────────────────── */
+  .form-label {
+    @apply block text-sm font-medium text-slate-700 mb-1.5;
+  }
+
+  .form-input {
+    @apply w-full rounded-lg border border-slate-300 bg-white
+           px-4 py-2.5 text-sm text-slate-900
+           placeholder:text-slate-400
+           transition-colors duration-150
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+           disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed;
+  }
+
+  .form-textarea {
+    @apply form-input resize-none;
+  }
+
+  .form-error {
+    @apply mt-1.5 text-xs font-medium text-red-600;
+  }
+
+  /* ── Skeleton ───────────────────────────────────────────────────────────── */
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-slate-200;
+  }
+
+  /* ── Divider with text ──────────────────────────────────────────────────── */
+  .divider-text {
+    @apply relative flex items-center;
+  }
+
+  .divider-text::before,
+  .divider-text::after {
+    @apply flex-1 border-t border-slate-200 content-[''];
+  }
+
+  .divider-text span {
+    @apply mx-4 text-xs font-medium text-slate-400 uppercase tracking-widest;
+  }
+
+  /* ── Prose overrides ────────────────────────────────────────────────────── */
+  .prose-semadi {
+    @apply prose prose-slate prose-lg max-w-none
+           prose-headings:font-display prose-headings:font-bold
+           prose-a:text-blue-600 prose-a:font-medium hover:prose-a:text-blue-700
+           prose-img:rounded-2xl prose-img:shadow-card
+           prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50
+           prose-blockquote:rounded-r-xl prose-blockquote:not-italic;
+  }
+
+  /* ── Gradient text ──────────────────────────────────────────────────────── */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 to-blue-400
+           bg-clip-text text-transparent;
+  }
+
+  .gradient-text-accent {
+    @apply bg-gradient-to-r from-red-600 to-red-400
+           bg-clip-text text-transparent;
+  }
+
+  /* ── Nav link ───────────────────────────────────────────────────────────── */
+  .nav-link {
+    @apply relative text-sm font-medium text-slate-600
+           transition-colors duration-200 hover:text-blue-600;
+  }
+
+  .nav-link.active {
+    @apply text-blue-600;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-0.5 w-0
+           bg-blue-600 rounded-full
+           transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  /* ── Page hero ──────────────────────────────────────────────────────────── */
+  .page-hero {
+    @apply relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800
+           text-white overflow-hidden;
+  }
+
+  .page-hero-pattern {
+    @apply absolute inset-0 bg-hero-pattern opacity-30 pointer-events-none;
+  }
+}
+
+/* ─── Utility Layer ──────────────────────────────────────────────────────────── */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth scroll padding for anchor links under fixed navbar */
+  .scroll-offset {
+    scroll-margin-top: var(--navbar-height);
+  }
+
+  /* Glass morphism */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-slate-900/80 backdrop-blur-md border border-white/10;
+  }
+}
+
+/* ─── Print styles ───────────────────────────────────────────────────────────── */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
